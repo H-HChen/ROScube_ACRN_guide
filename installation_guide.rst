@@ -472,6 +472,7 @@ Copy real-time VM image
 #. You'll see the real-time VM is ready.
 
    .. figure:: images/rqi-acrn-rtos-ready.png
+
 Set up real-time VM
 ===================
 
