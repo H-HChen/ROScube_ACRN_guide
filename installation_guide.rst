@@ -188,16 +188,6 @@ Configure Hypervisor
 
 #. Close the browser and stop the process (Ctrl+C).
 
-.. note:: Reboot into the **native Linux kernel** (not the ACRN kernel)
-   and create User VM image.
-
-#. Clone real-time VM from User VM. (Right-click User VM and then clone)
-
-   .. figure:: images/rqi-acrn-rtos-clone.png
-
-#. You'll see the real-time VM is ready.
-
-   .. figure:: images/rqi-acrn-rtos-ready.png
 
 #. Optional: Patch the hypervisor if you want to passthrough GPIO to VM.
 
@@ -370,11 +360,11 @@ Create User VM image
 
 #. Select disk size you want. **Note that this can't be modified after creating image!**
 
-   .. figure:: images/rqi-acrn-kvm-storage.png
+   .. figure:: images/vm_storage.png
 
 #. Edit image name and select "Customize configuration before install".
 
-   .. figure:: images/rqi-acrn-kvm-name.png
+   .. figure:: images/vm_config.png
 
 #. Select correct Firmware, apply it, and Begin Installation.
 
@@ -387,6 +377,17 @@ Create User VM image
 
 #. To install ROS 2, refer to `Installing ROS 2 via Debian Packages
    <https://index.ros.org/doc/ros2/Installation/Dashing/Linux-Install-Debians/>`_
+
+.. note:: Reboot into the **native Linux kernel** (not the ACRN kernel)
+   and create User VM image.
+
+#. Clone real-time VM from User VM. (Right-click User VM and then clone)
+
+   .. figure:: images/rqi-acrn-rtos-clone.png
+
+#. You'll see the real-time VM is ready.
+
+   .. figure:: images/rqi-acrn-rtos-ready.png
 
 #. Optional: Use ACRN kernel if you want to passthrough GPIO to User VM.
 
