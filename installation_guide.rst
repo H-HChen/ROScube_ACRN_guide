@@ -10,8 +10,8 @@ Verified version
 
 - Ubuntu version: **18.04**
 - GCC version: **7.5.0**
-- ACRN-hypervisor branch: **v2.1**
-- ACRN-Kernel (Service VM kernel): **v2.1**
+- ACRN-hypervisor branch: **v2.3**
+- ACRN-Kernel (Service VM kernel): **v2.3**
 - RT kernel for Ubuntu User VM OS: **Linux kernel 4.19.59 with Xenomai 3.1**
 - HW: `ROScube-I`_
 
@@ -102,7 +102,7 @@ Set up Environment
    .. code-block:: bash
 
      mkdir ~/acrn && cd ~/acrn
-     git clone https://github.com/projectacrn/acrn-hypervisor -b release_2.1
+     git clone https://github.com/projectacrn/acrn-hypervisor -b release_2.3
      cd acrn-hypervisor
 
 Configure Hypervisor
@@ -214,7 +214,7 @@ Build Service VM kernel
    .. code-block:: bash
 
      cd ~/acrn
-     git clone https://github.com/projectacrn/acrn-kernel -b release_2.1
+     git clone https://github.com/projectacrn/acrn-kernel -b release_2.3
      cd acrn-kernel
 
 #. Restore default ACRN configuration.
