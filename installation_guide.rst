@@ -359,11 +359,11 @@ Create User VM image
 
 #. Select disk size you want. **Note that this can't be modified after creating image!**
 
-   .. figure:: images/vm_storage.png
+   .. figure:: images/rqi-acrn-kvm-storage.png
 
 #. Edit image name and select "Customize configuration before install".
 
-   .. figure:: images/vm_config.png
+   .. figure:: images/rqi-acrn-kvm-name.png
 
 #. Select correct Firmware, apply it, and Begin Installation.
 
@@ -380,7 +380,7 @@ Create User VM image
 #. Optional: Use ACRN kernel if you want to passthrough GPIO to User VM.
    
    Note: Before doing this step, you should `Copy VM image
-   <https://github.com/H-HChen/ROScube_ACRN_guide/blob/master/installation_guide.rst#copy-real-time-vm-image>`_ first.
+   <https://github.com/Adlink-ROS/ROScube_ACRN_guide/blob/master/installation_guide.rst#copy-real-time-vm-image>`_ first.
 
    .. code-block:: bash
 
@@ -472,7 +472,6 @@ Copy real-time VM image
 #. You'll see the real-time VM is ready.
 
    .. figure:: images/rqi-acrn-rtos-ready.png
-   
 Set up real-time VM
 ===================
 
@@ -482,7 +481,7 @@ Set up real-time VM
    information, or ask a question on the `ACRN users mailing list
    <https://lists.projectacrn.org/g/acrn-users>`_
 
-#. Poweron the Real Time OS on VM and modify your VM hostname.
+#. Poweron the real-time VM and modify your VM hostname.
 
    .. code-block:: bash
 
@@ -532,7 +531,7 @@ Set up real-time VM
      sudo addgroup root xenomai
      sudo usermod -a -G xenomai $USER
 
-#. Edit by ``/etc/default/grub``.
+#. Edit ``/etc/default/grub``.
 
    .. code-block:: bash
 
