@@ -378,8 +378,8 @@ Create User VM image
 #. To install ROS 2, refer to `Installing ROS 2 via Debian Packages
    <https://index.ros.org/doc/ros2/Installation/Dashing/Linux-Install-Debians/>`_
 
-.. note:: Reboot into the **native Linux kernel** (not the ACRN kernel)
-   and create User VM image.
+   .. note:: Reboot into the **native Linux kernel** (not the ACRN kernel)
+      and create User VM image.
 
 #. Clone real-time VM from User VM. (Right-click User VM and then clone)
 
