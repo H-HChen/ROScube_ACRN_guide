@@ -188,7 +188,6 @@ Configure Hypervisor
 
 #. Close the browser and stop the process (Ctrl+C).
 
-
 #. Optional: Patch the hypervisor if you want to passthrough GPIO to VM.
 
    .. code-block:: bash
@@ -378,18 +377,10 @@ Create User VM image
 #. To install ROS 2, refer to `Installing ROS 2 via Debian Packages
    <https://index.ros.org/doc/ros2/Installation/Dashing/Linux-Install-Debians/>`_
 
-   .. note:: Reboot into the **native Linux kernel** (not the ACRN kernel)
-      and create User VM image.
-
-#. Clone real-time VM from User VM. (Right-click User VM and then clone)
-
-   .. figure:: images/rqi-acrn-rtos-clone.png
-
-#. You'll see the real-time VM is ready.
-
-   .. figure:: images/rqi-acrn-rtos-ready.png
-
 #. Optional: Use ACRN kernel if you want to passthrough GPIO to User VM.
+   
+   Note: Before doing this step, you should `Copy VM image
+   <https://github.com/H-HChen/ROScube_ACRN_guide/blob/master/installation_guide.rst#copy-real-time-vm-image>`_ first.
 
    .. code-block:: bash
 
@@ -468,6 +459,20 @@ the User VM.
 Install real-time VM
 ********************
 
+Copy real-time VM image
+=======================
+
+.. note:: Reboot into the **native Linux kernel** (not the ACRN kernel)
+      and create User VM image.
+
+#. Clone real-time VM from User VM. (Right-click User VM and then clone)
+
+   .. figure:: images/rqi-acrn-rtos-clone.png
+
+#. You'll see the real-time VM is ready.
+
+   .. figure:: images/rqi-acrn-rtos-ready.png
+   
 Set up real-time VM
 ===================
 
@@ -477,7 +482,7 @@ Set up real-time VM
    information, or ask a question on the `ACRN users mailing list
    <https://lists.projectacrn.org/g/acrn-users>`_
 
-#. Poweron the ROS2SystemRTOS VM and modify your VM hostname.
+#. Poweron the Real Time OS on VM and modify your VM hostname.
 
    .. code-block:: bash
 
@@ -527,7 +532,7 @@ Set up real-time VM
      sudo addgroup root xenomai
      sudo usermod -a -G xenomai $USER
 
-#. Update by ``sudo vim /etc/default/grub``.
+#. Edit by ``/etc/default/grub``.
 
    .. code-block:: bash
 
