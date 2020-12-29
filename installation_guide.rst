@@ -97,6 +97,19 @@ Set up Environment
        e2fslibs-dev pkg-config libnuma-dev liblz4-tool flex bison
      sudo pip3 install kconfiglib
 
+#. Manually fetch and install the ``iasl`` binary to ``/usr/bin`` (where
+   ACRN expects it) with a newer version of the
+   than what's included with Ubuntu 18.04:
+
+   .. code-block:: bash
+
+     cd /tmp
+     wget https://acpica.org/sites/acpica/files/acpica-unix-20191018.tar.gz
+     tar zxvf acpica-unix-20191018.tar.gz
+     cd acpica-unix-20191018
+     make clean && make iasl
+     sudo cp ./generate/unix/bin/iasl /usr/sbin/
+
 #. Get code from GitHub.
 
    .. code-block:: bash
@@ -175,13 +188,26 @@ Configure Hypervisor
 
 #. Close the browser and stop the process (Ctrl+C).
 
+.. note:: Reboot into the **native Linux kernel** (not the ACRN kernel)
+   and create User VM image.
+
+#. Clone real-time VM from User VM. (Right-click User VM and then clone)
+
+   .. figure:: images/rqi-acrn-rtos-clone.png
+
+#. You'll see the real-time VM is ready.
+
+   .. figure:: images/rqi-acrn-rtos-ready.png
+
 #. Optional: Patch the hypervisor if you want to passthrough GPIO to VM.
 
    .. code-block:: bash
 
      cd ~/acrn/acrn-hypervisor
-     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.1/patch/0001-Fix-ROScube-I-gpio-pin-assignment-table.patch
-     git apply 0001-Fix-ROScube-I-gpio-pin-assignment-table.patch
+     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.3/patch/0001-Fix-ROScube-I-gpio-pin-assignment-table.patch
+     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.3/patch/0002-Suppress-the-flood-messages-in-polling-mode.patch
+     
+     git apply 0001-Fix-ROScube-I-gpio-pin-assignment-table.patch 0002-Suppress-the-flood-messages-in-polling-mode.patch
 
 #. Build hypervisor
 
@@ -369,7 +395,7 @@ Create User VM image
      sudo apt install git build-essential bison flex libelf-dev libssl-dev liblz4-tool
 
      # Clone code
-     git clone -b release_2.1 https://github.com/projectacrn/acrn-kernel
+     git clone -b release_2.3 https://github.com/projectacrn/acrn-kernel
      cd acrn-kernel
 
      # Set up kernel config
@@ -403,19 +429,6 @@ Run User VM
 Now back to the native machine to set up the environment for launching
 the User VM.
 
-#. Manually fetch and install the ``iasl`` binary to ``/usr/bin`` (where
-   ACRN expects it) with a newer version of the
-   than what's included with Ubuntu 18.04:
-
-   .. code-block:: bash
-
-     cd /tmp
-     wget https://acpica.org/sites/acpica/files/acpica-unix-20191018.tar.gz
-     tar zxvf acpica-unix-20191018.tar.gz
-     cd acpica-unix-20191018
-     make clean && make iasl
-     sudo cp ./generate/unix/bin/iasl /usr/sbin/
-
 #. Convert KVM image file format.
 
    .. code-block:: bash
@@ -428,7 +441,7 @@ the User VM.
 
    .. code-block:: bash
 
-     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.1/scripts/launch_ubuntu_uos.sh
+     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.3/scripts/launch_ubuntu_uos.sh
      chmod +x ./launch_ubuntu_uos.sh
 
 #. Set up network and reboot to take effect.
@@ -437,7 +450,7 @@ the User VM.
 
      mkdir -p ~/acrn/tools/
      cd ~/acrn/tools
-     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.1/scripts/acrn_bridge.sh
+     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.3/scripts/acrn_bridge.sh
      chmod +x ./acrn_bridge.sh
      ./acrn_bridge.sh
      sudo reboot
@@ -454,20 +467,6 @@ the User VM.
 Install real-time VM
 ********************
 
-Copy real-time VM image
-=======================
-
-.. note:: Reboot into the **native Linux kernel** (not the ACRN kernel)
-   and create User VM image.
-
-#. Clone real-time VM from User VM. (Right-click User VM and then clone)
-
-   .. figure:: images/rqi-acrn-rtos-clone.png
-
-#. You'll see the real-time VM is ready.
-
-   .. figure:: images/rqi-acrn-rtos-ready.png
-
 Set up real-time VM
 ===================
 
@@ -477,7 +476,7 @@ Set up real-time VM
    information, or ask a question on the `ACRN users mailing list
    <https://lists.projectacrn.org/g/acrn-users>`_
 
-#. Run the VM and modify your VM hostname.
+#. Poweron the ROS2SystemRTOS VM and modify your VM hostname.
 
    .. code-block:: bash
 
@@ -498,6 +497,7 @@ Set up real-time VM
      cp arch/x86/configs/xenomai_test_defconfig .config
      make olddefconfig
      sed -i '/CONFIG_GPIO_VIRTIO/c\CONFIG_GPIO_VIRTIO=m' .config
+     sed -i '/CONFIG_VIRTIO_PMD/c\CONFIG_VIRTIO_PMD=y' .config
      CONCURRENCY_LEVEL=$(nproc) make-kpkg --rootcmd fakeroot --initrd kernel_image kernel_headers
 
      # Install
@@ -526,7 +526,7 @@ Set up real-time VM
      sudo addgroup root xenomai
      sudo usermod -a -G xenomai $USER
 
-#. Update ``/etc/default/grub``.
+#. Update by ``sudo vim /etc/default/grub``.
 
    .. code-block:: bash
 
@@ -568,7 +568,7 @@ launching the real-time VM.
 
    .. code-block:: bash
 
-     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.1/scripts/launch_ubuntu_rtos.sh
+     wget https://raw.githubusercontent.com/Adlink-ROS/ROScube_ACRN_guide/v2.3/scripts/launch_ubuntu_rtos.sh
      chmod +x ./launch_ubuntu_rtos.sh
 
 #. **Reboot to ACRN kernel** and now you can launch the VM.

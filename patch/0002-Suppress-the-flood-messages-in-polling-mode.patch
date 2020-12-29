@@ -1,0 +1,25 @@
+From ee32a434aaf6644dc7a4f884d9545137e82e5ac9 Mon Sep 17 00:00:00 2001
+From: Edward Liao <edward.liao@adlinktech.com>
+Date: Tue, 22 Dec 2020 11:14:32 +0800
+Subject: [PATCH] Suppress the flood messages in polling mode
+
+---
+ devicemodel/hw/pci/virtio/virtio_gpio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/devicemodel/hw/pci/virtio/virtio_gpio.c b/devicemodel/hw/pci/virtio/virtio_gpio.c
+index e57bb1ca..bbd39c99 100644
+--- a/devicemodel/hw/pci/virtio/virtio_gpio.c
++++ b/devicemodel/hw/pci/virtio/virtio_gpio.c
+@@ -1221,7 +1221,7 @@ static void
+ virtio_irq_evt_notify(void *vdev, struct virtio_vq_info *vq)
+ {
+ 	/* The front-end driver does not make a kick, just avoid warning */
+-	WPRINTF(("%s", "virtio gpio irq_evt_notify\n"));
++	DPRINTF(("%s", "virtio gpio irq_evt_notify\n")); // WPRINTF
+ }
+ 
+ static void
+-- 
+2.17.1
+
